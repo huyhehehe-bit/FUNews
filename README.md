@@ -10,17 +10,17 @@ Backend chạy ở `http://localhost:8080`, frontend ở `http://localhost:5173`
 | --- | --- |
 | **frontend/** | Đầy đủ, chạy được. `npm run build` và `npm run lint` đều sạch. |
 | **backend/** — tầng dữ liệu và hợp đồng API | Đầy đủ: entity, repository, DTO, xử lý lỗi, bảo mật, CORS, cấu hình database. |
-| **backend/** — controller và service | **Để trống.** Mỗi người tự viết phần của mình. |
+| **backend/Huy/** — controller và service | Xong. `NewsController`, `NewsService`, `DataInitializer` và 7 test đều chạy. |
+| **backend/QA/**, **backend/Long/** — controller và service | **Để trống.** Mỗi người tự viết phần của mình. |
 
-Các file để trống chỉ có khai báo class và phần mô tả những gì cần viết:
+Các file còn để trống chỉ có khai báo class và phần mô tả những gì cần viết:
 
 ```text
 backend/QA/   AuthController, AccountController, AccountService
 backend/Long/ CategoryController, CategoryService
-backend/Huy/  NewsController, NewsService, DataInitializer
 ```
 
-Backend hiện **compile và khởi động được**, nhưng chưa có endpoint nào nên frontend gọi API sẽ nhận 404, và chưa có `DataInitializer` nên chưa có tài khoản để đăng nhập.
+Backend **compile, khởi động và chạy test được**. `DataInitializer` đã tạo dữ liệu mẫu nên database có sẵn tài khoản và danh mục. Nhưng `POST /api/auth/login` của QA chưa có, nên chưa đăng nhập được từ frontend — mọi API đều trả 401 cho tới khi QA viết xong.
 
 ## Ba người, ba folder
 
@@ -32,7 +32,9 @@ Mỗi người sở hữu một folder trong `backend/` và một folder trong `
 | Long | Categories, Settings | `backend/Long/`, `frontend/Long/` — [hướng dẫn](backend/Long/README.md) |
 | Huy | News, Dashboard | `backend/Huy/`, `frontend/Huy/` — [hướng dẫn](backend/Huy/README.md) |
 
-Quy trình commit: [CONTRIBUTING.md](CONTRIBUTING.md). Cách nhờ Claude viết code phần của mình: [PROMPT.md](PROMPT.md).
+Nhóm dùng ba tầng nhánh: `main` là bản ổn định, `main2` là nơi cả ba đẩy code vào và ghép với nhau, còn `qa` / `long` / `huy` là nhánh làm việc riêng. Chỉ gộp `main2` sang `main` khi không còn xung đột và test chạy xanh.
+
+Quy trình commit đầy đủ: [CONTRIBUTING.md](CONTRIBUTING.md). Cách nhờ Claude viết code phần của mình: [PROMPT.md](PROMPT.md).
 
 ## Cấu trúc
 
@@ -153,7 +155,7 @@ Phân quyền theo URL đã khai sẵn trong [SecurityConfig](backend/QA/src/mai
 
 ## Tài khoản chạy thử
 
-Sẽ có sau khi `DataInitializer` của Huy được viết. Dữ liệu mẫu chỉ tạo khi database trống.
+`DataInitializer` đã tạo sẵn các tài khoản dưới đây, chỉ tạo khi database trống. Đăng nhập được từ giao diện sau khi QA viết xong `AuthController`.
 
 | Tên đăng nhập | Mật khẩu | Quyền |
 | --- | --- | --- |

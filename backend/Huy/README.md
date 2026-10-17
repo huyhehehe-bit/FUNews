@@ -12,17 +12,20 @@ Chỉ sửa `backend/Huy/` và `frontend/Huy/`. Quy trình commit: [CONTRIBUTING
 
 `CorsConfig` cho phép `localhost:5173`, `127.0.0.1:5173` (dev) và `localhost:4173`, `127.0.0.1:4173` (preview). Đây là cổng nối sang React — sửa sai là cả nhóm không gọi được API.
 
-## Cần viết — hiện đang để trống
+## Đã viết
 
 | File | Việc |
 | --- | --- |
 | [controller/NewsController.java](src/main/java/com/funews/backend/controller/NewsController.java) | `/api/news`, `/api/news/{id}`, `/api/dashboard` |
 | [service/NewsService.java](src/main/java/com/funews/backend/service/NewsService.java) | Nghiệp vụ bài viết và thống kê |
 | [config/DataInitializer.java](src/main/java/com/funews/backend/config/DataInitializer.java) | Dữ liệu mẫu, chỉ chạy khi database trống |
+| [test/NewsIntegrationTest.java](src/test/java/com/funews/backend/NewsIntegrationTest.java) | 7 test cho bài viết và dashboard |
 
-Đặc tả chi tiết nằm trong comment ở đầu mỗi file. Bảng endpoint đầy đủ ở [README chung](../../README.md#hợp-đồng-api).
+Bảng endpoint đầy đủ ở [README chung](../../README.md#hợp-đồng-api).
 
-Quy tắc nghiệp vụ phải giữ:
+`NewsIntegrationTest` đăng nhập giả bằng `user(...)` của spring-security-test vì `POST /api/auth/login` của QA chưa có. Khi QA viết xong, đổi sang `login()` của `BackendIntegrationSupport` để kiểm tra cả luồng phiên thật, và bổ sung các test về CORS với phân quyền Admin/Staff.
+
+Quy tắc nghiệp vụ đã cài trong code:
 
 - Server tự xác định tác giả (tài khoản đang đăng nhập) và ngày tạo. Client gửi `createdById` hay `createdDate` thì bỏ qua.
 - Sửa bài giữ nguyên tác giả và ngày tạo ban đầu.
