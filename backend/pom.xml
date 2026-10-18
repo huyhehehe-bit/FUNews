@@ -91,6 +91,7 @@
                         </goals>
                         <configuration>
                             <sources>
+                                <source>${project.basedir}/QA/src/test/java</source>
                                 <source>${project.basedir}/Long/src/test/java</source>
                                 <source>${project.basedir}/Huy/src/test/java</source>
                             </sources>
